@@ -11,6 +11,12 @@ CPU::CPU(Memory* theMemory)
 	_memory = theMemory;
 }
 
+// deconstructor
+CPU::~CPU()
+{
+// nothing to destruct
+}
+
 Instruction CPU::decode(byte value)
 {
 	byte shiftedWord = value >> 4; // instruction is defined by the leftmost 4 bits 
@@ -73,7 +79,6 @@ boolean CPU::step()
 			break;
 		case NOT:
 			_AC = ~(_AC);
-			_PC = _PC + 1;
 			updateNZ();
 			break;
 		case JMP:
@@ -83,13 +88,19 @@ boolean CPU::step()
 			if (_N == true)
 				_PC = _memory->read(_PC);
 			else
+			{
+				_memory->read(_PC); // unnecessary
 				_PC = _PC + 1;
+			}
 			break;
 		case JZ:
 			if (_Z == true)
 				_PC = _memory->read(_PC);
 			else
+			{
+				_memory->read(_PC); // unnecessary
 				_PC = _PC + 1;
+			}
 			break;
 		case HLT: return false;
 		case INVALID: break;
