@@ -1,7 +1,7 @@
 #include "CPU.h"
 
 // constructor
-CPU::CPU(Memory theMemory)
+CPU::CPU(Memory* theMemory)
 {
 	_AC = 0;
 	_PC = 0;
@@ -39,7 +39,7 @@ Instruction CPU::decode(byte value)
 // runs a single instruction; returns false if the instruction run was a halt
 boolean CPU::step()
 {
-	Instruction currentInstruction = decode(_memory.read(_PC));
+	Instruction currentInstruction = decode(_memory->read(_PC));
 	_PC = _PC + 1;
 	_instructionCount += 1;
 	
@@ -48,26 +48,26 @@ boolean CPU::step()
 	{
 		case NOP: break;
 		case STA:
-			_memory.write(_memory.read(_PC), _AC);
+			_memory->write(_memory->read(_PC), _AC);
 			_PC = _PC + 1;
 			break;
 		case LDA:
-			_AC = _memory.read(_memory.read(_PC));
+			_AC = _memory->read(_memory->read(_PC));
 			_PC = _PC + 1;
 			updateNZ();
 			break;
 		case ADD:
-			_AC = _AC + _memory.read(_memory.read(_PC));
+			_AC = _AC + _memory->read(_memory->read(_PC));
 			_PC = _PC + 1;
 			updateNZ();
 			break;
 		case OR:
-			_AC = _AC | _memory.read(_memory.read(_PC));
+			_AC = _AC | _memory->read(_memory->read(_PC));
 			_PC = _PC + 1;
 			updateNZ();
 			break;
 		case AND:
-			_AC = _AC & _memory.read(_memory.read(_PC));
+			_AC = _AC & _memory->read(_memory->read(_PC));
 			_PC = _PC + 1;
 			updateNZ();
 			break;
@@ -77,17 +77,17 @@ boolean CPU::step()
 			updateNZ();
 			break;
 		case JMP:
-			_PC = _memory.read(_PC);
+			_PC = _memory->read(_PC);
 			break;
 		case JN:
 			if (_N == true)
-				_PC = _memory.read(_PC);
+				_PC = _memory->read(_PC);
 			else
 				_PC = _PC + 1;
 			break;
 		case JZ:
 			if (_Z == true)
-				_PC = _memory.read(_PC);
+				_PC = _memory->read(_PC);
 			else
 				_PC = _PC + 1;
 			break;

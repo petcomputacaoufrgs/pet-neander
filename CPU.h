@@ -23,7 +23,7 @@ enum Instruction
 class CPU
 {
 public:
-	CPU(Memory theMemory); // constructor
+	CPU(Memory* theMemory); // constructor
     ~CPU(); // deconstructor
 	boolean step();
 	void run();
@@ -45,7 +45,7 @@ private:
 	void updateNZ();
 	
 	Instruction decode(byte value);
-	Memory _memory;
+	Memory* _memory;
 };
 
 #endif // CPU_H
