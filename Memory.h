@@ -12,8 +12,11 @@ public:
     ~Memory(); // deconstructor
     byte read(byte address);
     void write(byte address, byte value);
+	unsigned long getMemoryAcesses();
+	
 private:
     byte _words[N_WORDS];
+	unsigned long _memoryAccesses;
 };
 
 #endif // MEMORY_H

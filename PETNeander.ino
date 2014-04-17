@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "Memory.h"
-#include "Decoder.h"
+#include "CPU.h"
 
 void setup()
 {
@@ -11,4 +11,3 @@ void loop()
 {
 
 }
-
